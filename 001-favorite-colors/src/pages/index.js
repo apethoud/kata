@@ -14,6 +14,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main style={{ padding: 24 }}>
+        <div style={{ fontSize: 24, marginBottom: 24 }}>Favorite Colors</div>
         <ColorChart />
       </main>
     </>
