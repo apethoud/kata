@@ -3,20 +3,27 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { Flex } from './styles'
 import { useEffect, useState } from 'react'
-import { initialCards } from './initialCards'
 import Card from './components/Card/Card'
 import { symbolPool } from './symbolPool'
 import { shuffle } from './utils'
 
 const inter = Inter({ subsets: ['latin'] })
 
+const numberOfCards = 10;
+const initialCards = [];
+for (let i = 0; i < numberOfCards; i++) {
+  initialCards.push({ id: i + 1});
+}
+
 export default function Home() {
   const [cards, setCards] = useState(initialCards);
 
   const initializeGame = () => {
-    const selectedSymbols = symbolPool.slice(0, cards.length / 2);
+    const selectedSymbols = symbolPool.slice(0, initialCards.length / 2);
     const symbolsToAssign = shuffle([...selectedSymbols, ...selectedSymbols]);
-    const cardsWithSymbols = cards.map((card, index) => {
+    const cardsWithSymbols = initialCards.map((card, index) => {
+      card.isFlipped = false;
+      card.matched = false;
       card.symbol = symbolsToAssign[index];
       return card;
     })
@@ -35,7 +42,10 @@ export default function Home() {
     setCards(nextCards);
   }
 
-  // At the proper time, determine if a match has been found. Reflip cards if not. If so, leave cards flipped. If the game is won, show success and new game button.
+  const allCardsAreMatched = allCards => {
+    const matchedCards = allCards.filter(card => card.matched === true);
+    return cards.length === matchedCards.length;
+  }
 
   useEffect(() => {
     initializeGame();
@@ -67,10 +77,6 @@ export default function Home() {
       }
     }
   }, [cards])
-
-  useEffect(() => {
-    // If all cards are matched, show success and new game button.
-  }, [cards])
   
   return (
     <>
@@ -91,6 +97,12 @@ export default function Home() {
               flipCardById={flipCardById} />
           ))}
         </Flex>
+          {allCardsAreMatched(cards) && (
+            <>
+              <div>You won! 🎉</div>
+              <button onClick={() => initializeGame()}>New Game</button>
+            </>
+          )}
       </main>
     </>
   )
