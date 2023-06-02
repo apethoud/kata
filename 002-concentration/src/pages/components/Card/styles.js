@@ -13,5 +13,9 @@ export const StyledCardBack = styled(StyledCard)`
 `;
 
 export const StyledCardFront = styled(StyledCard)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: White;
+  font-size: 72px;
 `;
