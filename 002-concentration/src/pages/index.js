@@ -17,6 +17,7 @@ for (let i = 0; i < numberOfCards; i++) {
 
 export default function Home() {
   const [cards, setCards] = useState(initialCards);
+  const [isUserViewingMismatchedCards, setIsUserViewingMismatchedCards] = useState(false);
 
   const initializeGame = () => {
     const selectedSymbols = symbolPool.slice(0, initialCards.length / 2);
@@ -31,15 +32,17 @@ export default function Home() {
   }
 
   const flipCardById = id => {
-    const nextCards = cards.map(card => {
-      if (card.id !== id) {
-        return card;
-      } else {
-        card.isFlipped = true;
-        return card;
-      }
-    })
-    setCards(nextCards);
+    if (!isUserViewingMismatchedCards) {
+      const nextCards = cards.map(card => {
+        if (card.id !== id) {
+          return card;
+        } else {
+          card.isFlipped = true;
+          return card;
+        }
+      })
+      setCards(nextCards);
+    }
   }
 
   const allCardsAreMatched = allCards => {
@@ -67,13 +70,17 @@ export default function Home() {
       } 
       // Else wait one second and flip both cards back over.
       else {
-        const nextCards = cards.map(card => {
-          if (card.isFlipped && !card.matched) {
-            card.isFlipped = false;
-          }
-          return card;
-        })
-        setCards(nextCards);
+        setIsUserViewingMismatchedCards(true);
+        const timeout = setTimeout(() => {
+          const nextCards = cards.map(card => {
+            if (card.isFlipped && !card.matched) {
+              card.isFlipped = false;
+            }
+            return card;
+          })
+          setCards(nextCards);
+          setIsUserViewingMismatchedCards(false);
+        }, 750)
       }
     }
   }, [cards])
