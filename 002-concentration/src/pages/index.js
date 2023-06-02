@@ -8,10 +8,21 @@ import Card from './components/Card/Card'
 
 const inter = Inter({ subsets: ['latin'] })
 
-
-
 export default function Home() {
   const [cards, setCards] = useState(initialCards);
+
+  const flipCardById = id => {
+    const nextCards = cards.map(card => {
+      if (card.id !== id) {
+        return card;
+      } else {
+        card.isFlipped = true;
+        return card;
+      }
+    })
+    setCards(nextCards);
+  }
+
   return (
     <>
       <Head>
@@ -27,7 +38,8 @@ export default function Home() {
             <Card 
               key={card.id}
               id={card.id}
-              isFlipped={card.isFlipped} />
+              isFlipped={card.isFlipped}
+              flipCardById={flipCardById} />
           ))}
         </Flex>
       </main>

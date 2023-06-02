@@ -13,5 +13,5 @@ export const StyledCardBack = styled(StyledCard)`
 `;
 
 export const StyledCardFront = styled(StyledCard)`
-  background: Whitez;
+  background: White;
 `;

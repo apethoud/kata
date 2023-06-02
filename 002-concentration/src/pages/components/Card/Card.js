@@ -6,7 +6,8 @@ export default function Card({ id, symbol, isFlipped, flipCardById }) {
       {isFlipped ? (
         <StyledCardFront />
       ) : (
-        <StyledCardBack />
+        <StyledCardBack
+          onClick={() => flipCardById(id)} />
       )}
     </>
   )
