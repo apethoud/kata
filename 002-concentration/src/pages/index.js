@@ -23,8 +23,6 @@ export default function Home() {
     setCards(cardsWithSymbols);
   }
 
-
-
   const flipCardById = id => {
     const nextCards = cards.map(card => {
       if (card.id !== id) {
@@ -42,6 +40,37 @@ export default function Home() {
   useEffect(() => {
     initializeGame();
   }, [])
+
+  useEffect(() => {
+    const flippedButNotMatchedCards = cards.filter(card => card.isFlipped && !card.matched);
+    // If two cards are flipped,
+    if (flippedButNotMatchedCards.length === 2) {
+      // If their symbols match, mark each as matched.
+      if (flippedButNotMatchedCards[0].symbol === flippedButNotMatchedCards[1].symbol) {
+        const nextCards = cards.map(card => {
+          if (card.isFlipped && !card.matched) {
+            card.matched = true;
+          }
+          return card;
+        })
+        setCards(nextCards);
+      } 
+      // Else wait one second and flip both cards back over.
+      else {
+        const nextCards = cards.map(card => {
+          if (card.isFlipped && !card.matched) {
+            card.isFlipped = false;
+          }
+          return card;
+        })
+        setCards(nextCards);
+      }
+    }
+  }, [cards])
+
+  useEffect(() => {
+    // If all cards are matched, show success and new game button.
+  }, [cards])
   
   return (
     <>
