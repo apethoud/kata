@@ -9,7 +9,7 @@ import { shuffle } from './utils'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const numberOfCards = 10; // Must be an even number.
+const numberOfCards = 10; // Must be an even number, 24 max.
 const initialCards = [];
 for (let i = 0; i < numberOfCards; i++) {
   initialCards.push({ id: i + 1});
