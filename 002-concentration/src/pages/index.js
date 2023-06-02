@@ -2,9 +2,11 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { Flex } from './styles'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { initialCards } from './initialCards'
 import Card from './components/Card/Card'
+import { symbolPool } from './symbolPool'
+import { shuffle } from './utils'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -12,10 +14,16 @@ export default function Home() {
   const [cards, setCards] = useState(initialCards);
 
   const initializeGame = () => {
-    // Pick initialCards.length / 2 symbols from symbolPool randomly
-    // Create an array that includes two of each selected symbol, then randomize them
-    // Assign each card a symbol that corresponds to its index
+    const selectedSymbols = symbolPool.slice(0, cards.length / 2);
+    const symbolsToAssign = shuffle([...selectedSymbols, ...selectedSymbols]);
+    const cardsWithSymbols = cards.map((card, index) => {
+      card.symbol = symbolsToAssign[index];
+      return card;
+    })
+    setCards(cardsWithSymbols);
   }
+
+
 
   const flipCardById = id => {
     const nextCards = cards.map(card => {
@@ -31,6 +39,10 @@ export default function Home() {
 
   // At the proper time, determine if a match has been found. Reflip cards if not. If so, leave cards flipped. If the game is won, show success and new game button.
 
+  useEffect(() => {
+    initializeGame();
+  }, [])
+  
   return (
     <>
       <Head>
@@ -45,7 +57,7 @@ export default function Home() {
           {cards.map(card => (
             <Card 
               key={card.id}
-              id={card.id}
+              card={card}
               isFlipped={card.isFlipped}
               flipCardById={flipCardById} />
           ))}

@@ -1,13 +1,14 @@
 import { StyledCardBack, StyledCardFront } from "./styles";
 
-export default function Card({ id, symbol, isFlipped, flipCardById }) {
+export default function Card({ card, isFlipped, flipCardById }) {
   return (
     <>
       {isFlipped ? (
-        <StyledCardFront />
+        <StyledCardFront>
+          <div>{card.symbol}</div>
+        </StyledCardFront>
       ) : (
-        <StyledCardBack
-          onClick={() => flipCardById(id)} />
+        <StyledCardBack onClick={() => flipCardById(card.id)} />
       )}
     </>
   )
