@@ -1,0 +1,1 @@
+trancate table auth.users cascade;
