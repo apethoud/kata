@@ -4,7 +4,7 @@ import { supabase } from '../../supabaseClient';
 import AspectSelector from './AspectSelector';
 
 async function getAttitudes() {
-  let { data: attitudes, error } = await supabase.from('attitudes').select('name');
+  let { data: attitudes, error } = await supabase.from('attitudes').select('id,name');
   return attitudes;
 }
 
@@ -13,7 +13,10 @@ export default async function Home() {
   return (
     <>
       <div>NPC Builder</div>
-      <AspectSelector aspectOptions={attitudes} />
+      <AspectSelector 
+        aspectName="attitudes"
+        aspectOptions={attitudes} 
+      />
     </>
   )
 }
