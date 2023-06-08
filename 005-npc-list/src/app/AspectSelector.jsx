@@ -8,7 +8,6 @@ export default function AspectSelector({
   selectedAspect,
   setSelectedAspect 
 }) {
-  console.log("aspectOptions is: ", aspectOptions);
   return (
     <>
       <div>{ aspectName.charAt(0).toUpperCase() + aspectName.slice(1) }</div>
