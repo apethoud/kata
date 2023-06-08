@@ -11,6 +11,17 @@ export default function NpcBuilder({
   const [ selectedAttitude, setSelectedAttitude ] = useState(null);
   const [ selectedName, setSelectedName ] = useState(null);
   const [ selectedRace, setSelectedRace ] = useState(null);
+
+  const setProperIndefiniteArticle = followingWord => {
+    if (!followingWord) {
+      return 'a';
+    }
+    const vowels = ['a', 'e', 'i', 'o', 'u'];
+    const isFirstLetterVowel = vowels.reduce((accum, vowel) => {
+      return accum || followingWord.charAt(0).toLowerCase() === vowel;
+    }, false)
+    return isFirstLetterVowel ? 'an' : 'a'
+  }
   return (
     <>
       <div>NPC Builder</div>
@@ -32,7 +43,7 @@ export default function NpcBuilder({
         selectedAspect={selectedRace}
         setSelectedAspect={setSelectedRace}
       />
-      <div>{selectedName?.name} is a {selectedRace?.name} who's feeling {selectedAttitude?.name}.</div>
+      <div>{selectedName?.name} is {setProperIndefiniteArticle(selectedRace?.name)} {selectedRace?.name} who's feeling {selectedAttitude?.name}.</div>
     </>
   )
 }
