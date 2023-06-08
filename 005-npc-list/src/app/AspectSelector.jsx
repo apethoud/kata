@@ -2,7 +2,12 @@
 
 import AspectOption from "./AspectOption";
 
-export default function AspectSelector({ aspectName, aspectOptions }) {
+export default function AspectSelector({ 
+  aspectName, 
+  aspectOptions,
+  selectedAspect,
+  setSelectedAspect 
+}) {
   console.log("aspectOptions is: ", aspectOptions);
   return (
     <>
@@ -10,7 +15,9 @@ export default function AspectSelector({ aspectName, aspectOptions }) {
       {aspectOptions.map(option => (
         <AspectOption 
           key={option.id}
-          name={option.name} 
+          option={option} 
+          selectedAspect={selectedAspect}
+          setSelectedAspect={setSelectedAspect}
         />
       ))}
     </>

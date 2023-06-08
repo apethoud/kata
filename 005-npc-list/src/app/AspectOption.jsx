@@ -1,4 +1,8 @@
-export default function AspectOption({ name }) {
+export default function AspectOption({ 
+  option,
+  selectedAspect,
+  setSelectedAspect
+}) {
   return (
     <button style={{ 
       all: "unset", 
@@ -6,9 +10,10 @@ export default function AspectOption({ name }) {
       padding: 4,
       borderWidth: 1,
       borderStyle: "solid",
-      borderColor: "white" 
-    }}>
-      { name }
+      borderColor: option.id === selectedAspect?.id ? "turquoise" : "white",
+      color: option.id === selectedAspect?.id ? "turquoise" : "white"
+    }} onClick={() => setSelectedAspect(option)}>
+      { option.name }
     </button>
   )
 }
